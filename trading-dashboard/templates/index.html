@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradingView Free Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+    <div class="toolbar">
+        <div class="brand">TradingView Free Dashboard</div>
+        <div class="layout-controls">
+            <button onclick="setLayout(1)">1</button>
+            <button onclick="setLayout(2)">2</button>
+            <button onclick="setLayout(4)">4</button>
+            <button onclick="setLayout(6)">6</button>
+            <button onclick="setLayout(8)">8</button>
+        </div>
+    </div>
+    <div id="chart-grid" class="layout-4">
+        <!-- Panels dynamically injected here -->
+    </div>
+    
+    <!-- Template for chart panel -->
+    <template id="panel-template">
+        <div class="chart-panel">
+            <div class="chart-header">
+                <select class="symbol-select"></select>
+                <div class="live-price-badge">--</div>
+                <div class="timeframe-controls">
+                    <button data-tf="1m">1m</button>
+                    <button data-tf="5m">5m</button>
+                    <button data-tf="15m">15m</button>
+                    <button data-tf="1h">1h</button>
+                    <button data-tf="1d">1d</button>
+                </div>
+                <button class="indicators-btn">+ Indicators</button>
+            </div>
+            <div class="active-indicators" style="display: none;">
+                <div class="chips-container"></div>
+                <a href="#" class="clear-all-indicators">Clear all</a>
+            </div>
+            <div class="chart-canvas"></div>
+        </div>
+    </template>
+
+    <div id="indicators-popover" class="hidden">
+        <div class="popover-search">
+            <input type="text" id="indicator-search" placeholder="Search indicators...">
+        </div>
+        <div class="popover-list" id="indicator-list">
+            <!-- Populated via JS -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

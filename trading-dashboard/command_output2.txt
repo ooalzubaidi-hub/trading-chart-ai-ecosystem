@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS · BTC AI Command Center</title>
+    <meta name="description" content="BTC AI Command Center – Real-time Bitcoin signal analysis with Smart Money Concepts, multi-timeframe bias, and AI projections.">
+    <link rel="stylesheet" href="/static/css/command.css">
+    <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+
+<!-- Particle Background -->
+<canvas id="particle-canvas"></canvas>
+
+<div class="command-container">
+
+    <!-- ═══ TOP BAR ═══ -->
+    <header class="top-bar glass-panel" id="top-bar">
+        <div class="top-bar-left">
+            <div class="logo">NEXUS · BTC AI</div>
+            <span class="badge badge-live"><span class="pulse-dot"></span> LIVE</span>
+            <span class="badge badge-ai">⚡ AI ONLINE</span>
+        </div>
+        <div class="top-bar-right">
+            <div class="live-price-display">
+                <span class="label">BTC/USD</span>
+                <span id="topbar-price">--</span>
+            </div>
+            <div class="live-clock" id="live-clock">--:--:--</div>
+        </div>
+    </header>
+
+    <!-- ═══ HERO ROW ═══ -->
+    <div class="hero-row">
+
+        <!-- LEFT: Price Card -->
+        <div class="glass-panel price-card" id="price-card">
+            <div class="card-title"><span class="icon" style="background:rgba(34,230,255,0.15);color:var(--cyan);">₿</span> BTC PRICE</div>
+            <div class="price-main" id="hero-price">--</div>
+            <div class="price-change" id="hero-change">--%</div>
+            <div class="stat-row">
+                <span class="stat-label">AI Prediction</span>
+                <span class="stat-value" id="hero-prediction">--<span class="projection-badge">PROJECTION</span></span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Volatility (ATR)</span>
+                <span class="stat-value" id="hero-atr">--</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Timeframe</span>
+                <span class="stat-value" id="hero-tf">15M</span>
+            </div>
+        </div>
+
+        <!-- CENTER: Holographic AI Core -->
+        <div class="glass-panel ai-core-card" id="ai-core-card">
+            <div class="card-title"><span class="icon" style="background:rgba(155,107,255,0.15);color:var(--purple);">◆</span> AI SIGNAL CORE</div>
+            <div class="orb-container">
+                <div class="orb-glow neutral" id="orb-glow"></div>
+                <div class="ring ring-1"></div>
+                <div class="ring ring-2"></div>
+                <div class="orb-inner neutral" id="orb-inner">
+                    <span class="signal-word neutral" id="signal-word">--</span>
+                </div>
+            </div>
+            <div class="ai-info-row">
+                <span>AI SIGNAL · <span class="val" id="signal-strength">--</span></span>
+                <span>CONFIDENCE <span class="val" id="signal-confidence">--%</span></span>
+            </div>
+            <div class="ai-info-row" style="margin-top: 6px;">
+                <span>AGE <span class="val" id="signal-age">--</span></span>
+                <span>TF <span class="val" id="signal-tf">15M</span></span>
+            </div>
+        </div>
+
+        <!-- RIGHT: Confidence Card -->
+        <div class="glass-panel confidence-card" id="confidence-card">
+            <div class="card-title"><span class="icon" style="background:rgba(22,240,160,0.15);color:var(--green);">✦</span> CONFIDENCE</div>
+            <div class="confidence-pct" id="conf-pct">--%</div>
+            <div class="confidence-bar-container">
+                <div class="confidence-bar neutral" id="conf-bar" style="width: 0%"></div>
+            </div>
+            <ul class="factor-list" id="factor-list">
+                <!-- Populated by JS -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- ═══ MID ROW ═══ -->
+    <div class="mid-row">
+
+        <!-- LEFT: Chart -->
+        <div class="glass-panel chart-card">
+            <div class="card-title"><span class="icon" style="background:rgba(34,230,255,0.15);color:var(--cyan);">◈</span> BTC/USD · LIVE CHART</div>
+            <div id="command-chart-container"></div>
+            <div class="chart-legend" id="chart-legend">
+                <div class="legend-item"><span class="legend-dot" style="background:rgba(22,240,160,0.5)"></span> Bullish OB</div>
+                <div class="legend-item"><span class="legend-dot" style="background:rgba(255,77,99,0.5)"></span> Bearish OB</div>
+                <div class="legend-item"><span class="legend-dot" style="background:rgba(34,230,255,0.3)"></span> FVG</div>
+                <div class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span> BOS</div>
+                <div class="legend-item"><span class="legend-dot" style="background:var(--purple);border:1px dashed var(--purple)"></span> AI Forecast</div>
+            </div>
+        </div>
+
+        <!-- CENTER: AI Reasoning -->
+        <div class="glass-panel reasoning-card">
+            <div class="card-title"><span class="icon" style="background:rgba(155,107,255,0.15);color:var(--purple);">◉</span> AI REASONING</div>
+            <div class="reasoning-text" id="reasoning-text">Loading analysis...</div>
+            <div class="section-label" style="margin-top: 16px;">SMC STRUCTURE TAGS</div>
+            <div class="smc-tags" id="smc-tags">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- RIGHT: Liquidation Levels -->
+        <div class="glass-panel liq-card">
+            <div class="card-title"><span class="icon" style="background:rgba(255,77,99,0.15);color:var(--red);">⏚</span> EST. LIQUIDATIONS</div>
+            <div class="liq-disclaimer">APPROXIMATION ONLY based on leverage clusters.</div>
+            <div class="liq-heatmap" id="liq-heatmap">
+                <div class="whale-waiting">Calculating clusters...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ BOTTOM ROW ═══ -->
+    <div class="bottom-row">
+
+        <!-- LEFT: Risk Management -->
+        <div class="glass-panel risk-card">
+            <div class="card-title"><span class="icon" style="background:rgba(255,176,46,0.15);color:var(--amber);">⚠</span> RISK MANAGEMENT</div>
+            <div class="risk-grid" id="risk-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- CENTER: Signal Log -->
+        <div class="glass-panel log-card">
+            <div class="card-title"><span class="icon" style="background:rgba(34,230,255,0.15);color:var(--cyan);">◎</span> SIGNAL LOG</div>
+            <div class="signal-log-list" id="signal-log-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- RIGHT: Multi-Timeframe Bias -->
+        <div class="glass-panel mtf-card">
+            <div class="card-title"><span class="icon" style="background:rgba(155,107,255,0.15);color:var(--purple);">◫</span> MULTI-TIMEFRAME BIAS</div>
+            <div id="mtf-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+    <!-- ═══ WHALE TRACKER & SENTIMENT ROW ═══ -->
+    <div class="whale-row" style="margin-top: 20px;">
+        <!-- Whale Card -->
+        <div class="glass-panel whale-card">
+            <div class="card-title"><span class="icon" style="background:rgba(34,230,255,0.15);color:var(--cyan);">≋</span> WHALE TRACKER (LARGE TRADES)</div>
+            
+            <div class="whale-pressure-container">
+                <div class="pressure-label">Buy vs Sell Pressure (Last 5m)</div>
+                <div class="pressure-bar-bg">
+                    <div class="pressure-bar-fill" id="whale-pressure-fill" style="width: 50%;"></div>
+                </div>
+                <div class="pressure-stats">
+                    <span id="whale-buy-vol" class="val-buy">$0</span>
+                    <span id="whale-sell-vol" class="val-sell">$0</span>
+                </div>
+            </div>
+
+            <div class="whale-log-header">
+                <span>TIME</span>
+                <span>SIDE</span>
+                <span>SIZE (BTC)</span>
+                <span style="text-align: right;">VALUE (USD)</span>
+            </div>
+            <div class="whale-log-list" id="whale-log-list">
+                <div class="whale-waiting">Waiting for large prints (> $100k)...</div>
+            </div>
+        </div>
+
+        <!-- Sentiment Card -->
+        <div class="glass-panel sentiment-card">
+            <div class="card-title"><span class="icon" style="background:rgba(255,176,46,0.15);color:var(--amber);">☯</span> MARKET SENTIMENT</div>
+            
+            <div class="sentiment-value-container">
+                <div class="sentiment-score" id="fng-score">--</div>
+                <div class="sentiment-label neutral" id="fng-label">Loading...</div>
+            </div>
+            
+            <div class="fng-gauge">
+                <div class="fng-gauge-fill neutral" id="fng-gauge-fill" style="width: 50%;"></div>
+            </div>
+            <div class="fng-scale-labels">
+                <span>0</span>
+                <span>50</span>
+                <span>100</span>
+            </div>
+
+            <div class="fng-history-label">7-DAY TREND</div>
+            <div class="fng-history" id="fng-history">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="fng-source">Data: alternative.me/fng</div>
+        </div>
+    </div>
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="command-footer">
+        Signals are analysis, not financial advice. Past/projected values are not guarantees.<br>
+        AI projections are EMA-slope extrapolations clearly labeled as PROJECTIONS. No auto-trading or order placement.
+    </footer>
+
+</div>
+
+<script src="/static/js/command.js"></script>
+</body>
+</html>

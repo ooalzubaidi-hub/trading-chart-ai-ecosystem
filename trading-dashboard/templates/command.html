@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS · BTC AI Command Center</title>
+    <meta name="description" content="NEXUS BTC AI Command Center - Real-time Bitcoin trading signals, SMC analysis, and AI-powered market intelligence.">
+    <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+    <link rel="stylesheet" href="/static/css/command.css?v=8.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ═══════════ HEADER BAR ═══════════ -->
+    <header id="top-header">
+        <div class="hdr-left">
+            <span class="brand-name">NEXUS · BTC AI</span>
+            <span class="badge live"><span class="dot-pulse"></span> LIVE</span>
+            <span class="badge ai-on">⚡ AI ONLINE</span>
+        </div>
+        <div class="hdr-right">
+            <span class="pair-label">BTC/USD</span>
+            <span class="hdr-price" id="hdr-price">$75,710.00</span>
+            <span class="hdr-time" id="hdr-time">14:37:03</span>
+            <span class="hdr-sep">·</span>
+            <span class="hdr-date" id="hdr-date">May 27</span>
+        </div>
+    </header>
+
+    <!-- ═══════════ SCROLLABLE CONTENT ═══════════ -->
+    <main id="main-scroll">
+
+        <!-- ══════ ROW 1: Price / Signal Core / Confidence ══════ -->
+        <section class="row row-top3">
+            <!-- BTC PRICE -->
+            <div class="panel price-panel">
+                <div class="panel-title"><span class="icon-dot orange"></span> BTC PRICE</div>
+                <div class="price-big" id="btc-price">$75,797.29</div>
+                <div class="price-change down" id="btc-change">-1.16%</div>
+                <div class="price-meta">
+                    <div class="pm-row"><span class="pm-label">AI PREDICTION</span><span class="pm-val" id="ai-pred">$75,867.50</span> <span class="pm-tag">PROJECTION</span></div>
+                    <div class="pm-row"><span class="pm-label">VOLATILITY (ATR)</span><span class="pm-val" id="atr-val">$125.18</span></div>
+                    <div class="pm-row"><span class="pm-label">TIMEFRAME</span><span class="pm-val" id="tf-val">1M</span></div>
+                </div>
+            </div>
+
+            <!-- AI SIGNAL CORE -->
+            <div class="panel signal-panel">
+                <div class="panel-title"><span class="icon-dot green"></span> AI SIGNAL CORE</div>
+                <div class="signal-body">
+                    <div class="signal-orb-wrap">
+                        <div class="signal-orb" id="signal-orb">
+                            <div class="orb-ring r1"></div>
+                            <div class="orb-ring r2"></div>
+                            <div class="orb-ring r3"></div>
+                            <div class="orb-text" id="signal-text">NEUTRAL</div>
+                        </div>
+                    </div>
+                    <div class="signal-meta">
+                        <div class="sm-row">AI SIGNAL · <span id="sig-strength">MODERATE</span></div>
+                        <div class="sm-row">CONFIDENCE <span class="sm-highlight" id="sig-conf-sub">40%</span></div>
+                        <div class="sm-row">AGE <span class="sm-highlight" id="sig-age">42S</span> &nbsp; TI <span class="sm-highlight" id="sig-ti">15M</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIDENCE -->
+            <div class="panel conf-panel">
+                <div class="panel-title"><span class="icon-dot green"></span> CONFIDENCE</div>
+                <div class="conf-body">
+                    <div class="conf-big" id="conf-pct">40%</div>
+                    <div class="conf-bar-wrap">
+                        <div class="conf-bar" id="conf-bar" style="width:40%"></div>
+                    </div>
+                    <ul class="conf-checklist" id="conf-checklist">
+                        <li class="pass"><span class="chk">✓</span> Supertrend Bullish</li>
+                        <li class="fail"><span class="chk">✗</span> RSI > 50 (<span id="rsi-val">47.8</span>)</li>
+                        <li class="fail"><span class="chk">✗</span> Price > EMA50</li>
+                        <li class="pass"><span class="chk">✓</span> MACD Bullish</li>
+                        <li class="fail"><span class="chk">✗</span> Volume Confirm</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════ ROW 2: Chart / AI Reasoning / Est. Liquidations ══════ -->
+        <section class="row row-mid3">
+            <!-- LIVE CHART -->
+            <div class="panel chart-panel">
+                <div class="panel-title">
+                    <span><span class="icon-dot cyan"></span> BTC/USD &nbsp; LIVE CHART</span>
+                </div>
+                <div id="tv-chart-container"></div>
+                <div class="chart-forecast-label" id="chart-forecast-label">
+                    <span class="forecast-tag">AI FORECAST (PROJECTION)</span>
+                    <span class="forecast-price" id="forecast-price">$75,874.52</span>
+                </div>
+            </div>
+
+            <!-- AI REASONING -->
+            <div class="panel reasoning-panel">
+                <div class="panel-title"><span class="icon-dot purple"></span> AI REASONING</div>
+                <div class="reasoning-body">
+                    <div class="reasoning-text" id="reasoning-text">
+                        [14:36:42] BTC at $75,797.29 — Primary bias: NEUTRAL (consolidation). Supertrend is aligned upward, price trading below EMA-50. RSI shows weakness at 47.8. MACD histogram is bullish. Volume is unconvincing. Active structure: BOS (bearish), OB (bullish), FVG (bullish), LIQ (buy_side), CHoCH (bearish). Confidence: 40%.
+                    </div>
+                </div>
+                <div class="smc-tags-section">
+                    <div class="smc-tags-title">SMC STRUCTURE TAGS</div>
+                    <div class="smc-tags" id="smc-tags">
+                        <span class="smc-tag bearish">BOS (bearish)</span>
+                        <span class="smc-tag bullish">OB (bullish)</span>
+                        <span class="smc-tag bullish">FVG (bullish)</span>
+                        <span class="smc-tag bullish">LIQ (buy_side)</span>
+                        <span class="smc-tag bearish">CHoCH (bearish)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EST. LIQUIDATIONS -->
+            <div class="panel liq-panel">
+                <div class="panel-title"><span class="icon-dot red"></span> EST. LIQUIDATIONS</div>
+                <div class="liq-notice">⚠ APPROXIMATION ONLY based on leverage clusters.</div>
+                <div class="liq-bars" id="liq-bars">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════ ROW 3: Chart2(with SMC overlays) / Risk Mgmt / Signal Log / MTF Bias ══════ -->
+        <section class="row row-bot3">
+            <!-- FULL CHART WITH OVERLAYS -->
+            <div class="panel chart2-panel">
+                <div class="chart2-header">
+                    <div class="c2h-left" id="tv-chart2-container"></div>
+                </div>
+                <div class="chart2-legend">
+                    <span class="legend-item"><span class="leg-dot" style="background:#00cc66"></span> Bullish OB</span>
+                    <span class="legend-item"><span class="leg-dot" style="background:#ff3366"></span> Bearish OB</span>
+                    <span class="legend-item"><span class="leg-dot" style="background:#6600ff"></span> FVG</span>
+                    <span class="legend-item"><span class="leg-dot" style="background:#ff6600"></span> OMS</span>
+                    <span class="legend-item"><span class="leg-dot" style="background:#00ccff"></span> AI Forecast</span>
+                </div>
+            </div>
+
+            <!-- RIGHT-SIDE PANELS STACK -->
+            <div class="right-stack">
+
+                <!-- RISK MANAGEMENT -->
+                <div class="panel risk-panel">
+                    <div class="panel-title"><span class="icon-dot amber"></span> RISK MANAGEMENT</div>
+                    <div class="risk-grid">
+                        <div class="risk-box">
+                            <div class="rb-label">ENTRY</div>
+                            <div class="rb-val" id="risk-entry">$--</div>
+                        </div>
+                        <div class="risk-box">
+                            <div class="rb-label">STOP LOSS</div>
+                            <div class="rb-val red" id="risk-sl">$--</div>
+                        </div>
+                        <div class="risk-box">
+                            <div class="rb-label">TAKE PROFIT</div>
+                            <div class="rb-val green" id="risk-tp">$--</div>
+                        </div>
+                        <div class="risk-box">
+                            <div class="rb-label">RISK : REWARD</div>
+                            <div class="rb-val cyan" id="risk-rr">1 : --</div>
+                        </div>
+                        <div class="risk-box">
+                            <div class="rb-label">ATR (14)</div>
+                            <div class="rb-val" id="risk-atr">$--</div>
+                        </div>
+                        <div class="risk-box">
+                            <div class="rb-label">POSITION SIZE</div>
+                            <div class="rb-val">1% of Account</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIGNAL LOG -->
+                <div class="panel siglog-panel">
+                    <div class="panel-title"><span class="icon-dot amber"></span> SIGNAL LOG</div>
+                    <div class="siglog-body" id="siglog-body">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- MULTI-TIMEFRAME BIAS -->
+                <div class="panel mtf-panel">
+                    <div class="panel-title"><span class="icon-dot cyan"></span> MULTI-TIMEFRAME BIAS</div>
+                    <div class="mtf-body" id="mtf-body">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════ ROW 4: Whale Tracker / Market Sentiment ══════ -->
+        <section class="row row-bottom2">
+            <!-- WHALE TRACKER -->
+            <div class="panel whale-panel">
+                <div class="panel-title"><span class="icon-dot cyan"></span> WHALE TRACKER (LARGE TRADES)</div>
+                <div class="whale-pressure">
+                    <div class="wp-label">BUY VS SELL PRESSURE (LAST 5M)</div>
+                    <div class="wp-bar-wrap">
+                        <div class="wp-bar-buy" id="wp-bar-buy" style="width:50%"></div>
+                        <div class="wp-bar-sell" id="wp-bar-sell" style="width:50%"></div>
+                    </div>
+                    <div class="wp-vals">
+                        <span class="green" id="wp-buy-val">$0</span>
+                        <span class="red" id="wp-sell-val">$0</span>
+                    </div>
+                </div>
+                <div class="whale-table">
+                    <div class="wt-header">
+                        <span>TIME</span><span>SIDE</span><span>SIZE (BTC)</span><span>VALUE (USD)</span>
+                    </div>
+                    <div class="wt-body" id="whale-body">
+                        <div class="wt-empty">Waiting for large prints (> $100k)...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MARKET SENTIMENT -->
+            <div class="panel sentiment-panel">
+                <div class="panel-title"><span class="icon-dot amber"></span> MARKET SENTIMENT</div>
+                <div class="sent-body">
+                    <div class="sent-top">
+                        <span class="sent-value" id="fng-value">25</span>
+                        <span class="sent-label" id="fng-label">EXTREME FEAR</span>
+                    </div>
+                    <div class="sent-gauge-wrap">
+                        <div class="sent-gauge-bar">
+                            <div class="sent-gauge-fill" id="fng-fill" style="width:25%"></div>
+                        </div>
+                        <div class="sent-gauge-labels">
+                            <span>0</span><span>50</span><span>100</span>
+                        </div>
+                    </div>
+                    <div class="sent-trend-title">7 DAY TREND</div>
+                    <div class="sent-trend" id="fng-trend">
+                        <!-- 7 day trend blocks -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/static/js/command.js?v=8.0"></script>
+</body>
+</html>
